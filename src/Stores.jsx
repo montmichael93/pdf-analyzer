@@ -87,7 +87,6 @@ export const Stores = () => {
       {villageMissing.size === 0 ? <td>N/A</td>  : [...villageMissing].map((item, index) => <td key={index}>{item}</td>)}
       {villageMissing.size === 0 ? <td>✅</td> : <td>❌</td>}
       </tr>
-
             {/* row 4 */}
             <tr>
         <th>4</th>
@@ -96,7 +95,6 @@ export const Stores = () => {
         {bridgeHamptMissing.size === 0 ? <td>N/A</td>  : [...bridgeHamptMissing].map((item, index) => <td key={index}>{item}</td>)}
         {bridgeHamptMissing.size === 0 ? <td>✅</td> : <td>❌</td>}
       </tr>
-
             {/* row 5 */}
             <tr>
         <th>5</th>
@@ -105,7 +103,6 @@ export const Stores = () => {
       {eastHamptMissing.size === 0 ? <td>N/A</td>  : [...eastHamptMissing].map((item, index) => <td key={index}>{item}</td>)}
       {eastHamptMissing.size === 0 ? <td>✅</td> : <td>❌</td>}
       </tr>
-
             {/* row 6 */}
             <tr>
         <th>6</th>
@@ -114,12 +111,10 @@ export const Stores = () => {
        {southHamptMissing.size === 0 ? <td>N/A</td>  : [...southHamptMissing].map((item, index) => <td key={index}>{item}</td>)}
        {southHamptMissing.size === 0 ? <td>✅</td> : <td>❌</td>}
       </tr>
-
             {/* row 7 */}
             <tr>
         <th>7</th>
         <td>Greenwich</td>
-
       {greenWmissing.size === 0 ? <td>N/A</td>  : [...greenWmissing].map((item, index) => <td key={index}>{item}</td>)}
       {greenWmissing.size === 0 ? <td>✅</td> : <td>❌</td>}
       </tr>

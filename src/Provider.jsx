@@ -36,6 +36,7 @@ import { useEffect } from "react";
       }
     }, [jsonData])
 
+    console.log(jsonData);
 
   useEffect(() => {
     if (jsonData) {
