@@ -36,30 +36,79 @@ import { useEffect } from "react";
       }
     }, [jsonData])
 
-    console.log(jsonData);
+  
 
   useEffect(() => {
     if (jsonData) {
     const parsedObject = JSON.parse(jsonData);
-    const westOrders = parsedObject.pages.filter((page) => page.text.includes("Pick report for: Citarella West, LLC")).flatMap((items) => items.text);
+
+    const EXCLUDED_EXACT_VALUES = new Set([
+      "", " ", "1.00", "SKU", "Comment", "COE", "Subcategory", "EA",
+      "CUT FRUIT", "CUT VEGETABLES", "HERBS", "JUICE", "LEAFY GREENS", "SALADS"
+  ]);
+  
+  const EXCLUDED_PATTERNS = [
+      /\b2024\b/, /\bUOM\b/, /\bReport\b/, /\bDate\b/, /\bItem\b/,
+      /\bPick\b/, /\bPage\b/, /\bQty\b/, /Ä/, /\b150\b/, /\b015\b/
+  ];
+
+
+  const shouldInclude = (item) => 
+    !EXCLUDED_EXACT_VALUES.has(item) && 
+    !EXCLUDED_PATTERNS.some(pattern => pattern.test(item));
+
+
+
+    const westOrders = parsedObject.pages
+    .filter(page => page.text.includes("Pick report for: Citarella West, LLC"))
+    .flatMap(page => page.text)
+    .filter(shouldInclude);
     setWestOrders((prevSet) => new Set([...prevSet, ...westOrders]));
-    const eastOrders = parsedObject.pages.filter((page) => page.text.includes("Pick report for: Citarella East, LLC")).flatMap((items) => items.text);
+
+
+    const eastOrders = parsedObject.pages
+    .filter((page) => page.text.includes("Pick report for: Citarella East, LLC"))
+    .flatMap((items) => items.text)
+    .filter(shouldInclude);
     setEastOrders((prevSet) => new Set([...prevSet, ...eastOrders])); 
-    const villageOrders = parsedObject.pages.filter((page) => page.text.includes("Pick report for: Village Enterprises, LLC")).flatMap((items) => items.text)
+
+    const villageOrders = parsedObject
+    .pages.filter((page) => page.text.includes("Pick report for: Village Enterprises, LLC"))
+    .flatMap((items) => items.text)
+    .filter(shouldInclude);
     setVillageOrders((prevSet) => new Set([...prevSet, ...villageOrders])); 
-    const bridgeHamptOrders = parsedObject.pages.filter((page) => page.text.includes("Pick report for: Bridgehampton Enterprises, LLC")).flatMap((items) => items.text)
-    setBridgeHamptOrders((prevSet) => new Set([...prevSet, ...bridgeHamptOrders])); 
-    const eastHamptOrders= parsedObject.pages.filter((page) => page.text.includes("Pick report for: East Hampton Enterprises, LLC")).flatMap((items) => items.text)
+
+    const bridgeHamptOrders = parsedObject
+    .pages.filter((page) => page.text.includes("Pick report for: Bridgehampton Enterprises, LLC"))
+    .flatMap((items) => items.text)
+    .filter(shouldInclude);
+    setBridgeHamptOrders((prevSet) => new Set([...prevSet, ...bridgeHamptOrders]));
+
+    const eastHamptOrders= parsedObject
+    .pages.filter((page) => page.text.includes("Pick report for: East Hampton Enterprises, LLC"))
+    .flatMap((items) => items.text)
+    .filter(shouldInclude);
     setEastHampOrders((prevSet) => new Set([...prevSet, ...eastHamptOrders])); 
-    const southHamptOrders = parsedObject.pages.filter((page) => page.text.includes("Pick report for: Southampton Enterprises, LLC")).flatMap((items) => items.text)
+
+
+    const southHamptOrders = parsedObject
+    .pages.filter((page) => page.text.includes("Pick report for: Southampton Enterprises, LLC"))
+    .flatMap((items) => items.text)
     setSouthHamptOrders((prevSet) => new Set([...prevSet, ...southHamptOrders])); 
-    const greenWOrders = parsedObject.pages.filter((page) => page.text.includes("Pick report for: Greenwich CT Enteprises, LLC")).flatMap((items) => items.text)
+
+
+    const greenWOrders = parsedObject
+    .pages.filter((page) => page.text.includes("Pick report for: Greenwich CT Enteprises, LLC"))
+    .flatMap((items) => items.text)
+    .filter(shouldInclude);
     setGreenWOrders((prevSet) => new Set([...prevSet, ...greenWOrders])); 
+
+      console.log(eastOrders)
     
     }
   }, [jsonData]); 
 
-
+     
 
     return (
         <PdfContext.Provider

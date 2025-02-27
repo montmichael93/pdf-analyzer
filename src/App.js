@@ -5,8 +5,6 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import * as pdfjsLib from "pdfjs-dist";
-import { Stores } from "./Stores";
-import { Catering } from "./Catering";
 
 function base64ToArrayBuffer(base64) {
   const binaryString = window.atob(base64.split(",")[1]);
@@ -22,14 +20,7 @@ function App() {
   // creating new plugin instance
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
-  const {
-    pdfError,
-    setPdfError,
-    analyzeState,
-    pdfFile,
-    setPdfFile,
-    setJsonData,
-  } = useData();
+  const { pdfError, setPdfError, pdfFile, setPdfFile, setJsonData } = useData();
 
   // handle file onChange event
   const allowedFiles = ["application/pdf"];
@@ -92,10 +83,6 @@ function App() {
             className="form-control"
             onChange={handleFile}
           ></input>
-
-          {analyzeState === "reports" && <Stores />}
-
-          {analyzeState === "catering" && <Catering />}
 
           {/* we will display error message in case user select some file
         other than pdf */}
